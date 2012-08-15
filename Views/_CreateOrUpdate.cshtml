@@ -1,0 +1,93 @@
+﻿@model Nop.Plugin.Misc.MultipleParents.Models.CategoryModel
+
+@Html.Telerik().TabStrip().Name("categorycategory-edit").Items(x =>
+{
+    x.Add().Text(T("Plugin.Misc.MultipleParents.Categories").Text).Content(TabCategories().ToHtmlString());
+})
+
+@helper TabCategories()
+{
+    if (Model.CategoryId > 0)
+    {
+        if (Model.NumberOfAvailableCategories > 0)
+        {            
+                @(Html.Telerik().Grid<Nop.Plugin.Misc.MultipleParents.Models.CategoryModel.CategoryCategoryModel>()
+                    .Name("categorycategories-grid")
+                       .DataKeys(keys =>
+                       {
+                           keys.Add(x => x.Id);
+                       })
+                       .DataBinding(dataBinding =>
+                       {
+                           dataBinding.Ajax()
+                               .Select("CategoryCategoryList", "Category", new { childCategoryId = Model.CategoryId })
+                               .Insert("CategoryCategoryInsert", "Category", new { childCategoryId = Model.CategoryId })
+                               .Update("CategoryCategoryUpdate", "Category")
+                               .Delete("CategoryCategoryDelete", "Category");
+                       })
+                       .Columns(columns =>
+                       {
+                           columns.Bound(x => x.Category)
+                               .Width(500)
+                               .Centered();
+                           columns.Bound(x => x.DisplayOrder1)
+                               .Width(100);
+                           columns.Command(commands =>
+                           {
+                               commands.Edit();
+                               commands.Delete();
+                           })
+                           .Width(180);
+                       })
+                       .ToolBar(commands => commands.Insert())
+                       .ClientEvents(events => events.OnEdit("onCategoryCategoryEdit"))
+                       .EnableCustomBinding(true))
+    
+                <script type="text/javascript">
+                    function onCategoryCategoryEdit(e) {
+                        var childCategoryId = @Model.CategoryId;
+                        var parentCategoryId = (e.dataItem['Id'] != 0 ? e.dataItem['ParentCategoryId'] : 0);
+                        var dropdown = $(e.form).find('#Category').data('tDropDownList');
+
+                        $.getJSON('@(Url.Action("CategoryCategoryGetAvailableCategories", "Category"))', { currentParentCategoryId: parentCategoryId, childCategoryId: childCategoryId }, function (data) {
+                            dropdown.dataBind(data);
+                            dropdown.select(function (dataItem) {
+                                return dataItem.Value == (parentCategoryId != null ? parentCategoryId : 0);
+                            });
+                        });
+                    }
+                </script>
+        }
+        else
+        {
+                @T("Plugin.Misc.MultipleParents.NoCategoriesAvailable")
+        }
+    }
+    else
+    {
+            @T("Plugin.Misc.MultipleParents.SaveBeforeEdit")
+    }
+}
+
+@(Html.Telerik().ScriptRegistrar()
+    .jQuery(false)
+    .jQueryValidation(false)
+    )
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // append new tab to existing tab strip
+        var tabIndex = $('#category-edit ul li').length + 1;
+        $('#categorycategory-edit ul li').appendTo('#category-edit ul').find('a').prop('href', '#category-edit-' + tabIndex);
+        $('#categorycategory-edit-1').appendTo('#category-edit').prop('id', 'category-edit-' + tabIndex);
+        $('#categorycategory-edit').remove();
+
+        // add tab to tabstrip data
+        var tabStrip = $('#category-edit').data('tTabStrip');
+        tabStrip.$contentElements.push($('#category-edit-' + tabIndex)[0]);
+
+        // hide base parent category and display order fields
+        $('#category-edit-1 label[for="ParentCategoryId"]').parent().parent().hide();
+        $('#category-edit-1 label[for="DisplayOrder"]').parent().parent().hide();
+    });
+</script>

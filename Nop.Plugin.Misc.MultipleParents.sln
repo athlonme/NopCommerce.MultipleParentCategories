@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nop.Plugin.Misc.MultipleParents", "Nop.Plugin.Misc.MultipleParents.csproj", "{7C2F1A7F-013C-4B4F-9A2F-3A8B22A756AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C2F1A7F-013C-4B4F-9A2F-3A8B22A756AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2F1A7F-013C-4B4F-9A2F-3A8B22A756AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2F1A7F-013C-4B4F-9A2F-3A8B22A756AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2F1A7F-013C-4B4F-9A2F-3A8B22A756AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
