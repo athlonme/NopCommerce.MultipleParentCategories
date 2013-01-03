@@ -1,8 +1,8 @@
 Group: Misc
 FriendlyName: Multiple Parent Categories
 SystemName: Misc.MultipleParents
-Version: 1.00
-SupportedVersions: 2.60
+Version: 1.01
+SupportedVersions: 2.70
 Author: Tom van Enckevort
 DisplayOrder: 1
 FileName: Nop.Plugin.Misc.MultipleParents.dll

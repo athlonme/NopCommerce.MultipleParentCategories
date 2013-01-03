@@ -148,7 +148,7 @@ namespace Nop.Plugin.Misc.MultipleParents.Controllers
             return View("~/Plugins/Misc.MultipleParents/Views/Create.cshtml", model);
         }
 
-        [HttpPost, FormValueExists("save", "save-continue", "continueEditing")]
+        [HttpPost, ParameterBasedOnFormNameAttribute("save-continue", "continueEditing")]
         public ActionResult Create(Nop.Admin.Models.Catalog.CategoryModel model, bool continueEditing)
         {
             var result = _categoryController.Create(model, continueEditing);
@@ -193,7 +193,7 @@ namespace Nop.Plugin.Misc.MultipleParents.Controllers
             return View("~/Plugins/Misc.MultipleParents/Views/Edit.cshtml", model);
         }
 
-        [HttpPost, FormValueExists("save", "save-continue", "continueEditing")]
+        [HttpPost, ParameterBasedOnFormNameAttribute("save-continue", "continueEditing")]
         public ActionResult Edit(Nop.Admin.Models.Catalog.CategoryModel model, bool continueEditing)
         {
             return _categoryController.Edit(model, continueEditing);

@@ -85,6 +85,11 @@ UpgradeLog*.XML
 
 Deployable/
 
+# Telerik packages
+App_GlobalResources/
+Content/
+Scripts/
+
 ############
 ## Windows
 ############
